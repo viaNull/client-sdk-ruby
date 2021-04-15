@@ -22,7 +22,7 @@ module Platon
     def mined?
       return true if @mined
       tx = @connection.platon_get_transaction_by_hash(@id)
-      @mined = !tx.nil? && !tx["result"].nil? && tx["result"]["blockNumber"].present?
+      @mined = !tx.nil? && tx["blockNumber"].present?
     end
 
     def wait_for_miner(timeout: DEFAULT_TIMEOUT, step: DEFAULT_STEP)

@@ -1,7 +1,7 @@
 ## 基础RPC接口
 基础API包括网络、交易、查询、节点信息、经济模型参数配置等相关的接口，具体说明如下。
 
-### web3_clientVersion
+### web3_client_version
 返回当前客户端版本
 
 * 参数:
@@ -66,6 +66,8 @@ client.net_peer_count
 ```
 
 ### platon_protocol_version
+查询
+
 * 参数
     无
 * 返回值
@@ -79,6 +81,8 @@ client.platon_protocol_version
 ```
 
 ### platon_syncing
+查询当前节点的同步状态
+
 * 参数
     无
 * 返回值

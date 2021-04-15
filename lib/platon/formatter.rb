@@ -32,17 +32,17 @@ module Platon
 
     ## TODO: atp? lat?
     UNITS = {
-      'von':          '1',
-      'kvon':         '1000',
-      'mvon':         '1000000',
-      'gvon':         '1000000000',
-      'microatp':     '1000000000000',
-      'milliatp':     '1000000000000000',
-      'atp':          '1000000000000000000',
-      'katp':         '1000000000000000000000',
-      'matp':         '1000000000000000000000000',
-      'gatp':         '1000000000000000000000000000',
-      'tatp':         '1000000000000000000000000000000'
+      'von':          1,
+      'kvon':         1000,
+      'mvon':         1000000,
+      'gvon':         1000000000,  ## 10 ** 9
+      'microatp':     1000000000000,
+      'milliatp':     1000000000000000,
+      'atp':          1000000000000000000, ## 10 ** 18
+      'katp':         1000000000000000000000,
+      'matp':         1000000000000000000000000,
+      'gatp':         1000000000000000000000000000,
+      'tatp':         1000000000000000000000000000000
     }
 
     def valid_address?(address_string)
@@ -87,12 +87,12 @@ module Platon
       "0x" + hexstring[-40..-1]
     end
 
-    def to_wei(amount, unit = "atp") #TODO
+    def to_von(amount, unit = "atp") #TODO
       return nil if amount.nil?
       BigDecimal(UNITS[unit.to_sym] * amount, 16).to_s.to_i rescue nil
     end
 
-    def from_wei(amount, unit = "atp") #TODO
+    def from_von(amount, unit = "atp") #TODO
       return nil if amount.nil?
       (BigDecimal(amount, 16) / BigDecimal(UNITS[unit.to_sym], 16)).to_s rescue nil
     end

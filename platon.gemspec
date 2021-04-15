@@ -43,4 +43,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport", ">= 4.0"
   spec.add_dependency "digest-sha3", "~> 1.1"
+  spec.add_dependency 'ffi', '~> 1.0'
+  spec.add_dependency 'rlp', '0.7.3'
+  spec.add_dependency 'money-tree', '0.10.0'
+
+  # spec.add_dependency 'bech32', '1.1.0'
 end

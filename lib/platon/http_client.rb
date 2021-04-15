@@ -16,6 +16,17 @@ module Platon
       @uri = URI("#{uri.scheme}://#{@host}:#{@port}#{uri.path}")
     end
 
+    def update_setting(params)  # :host,:proxy, :chain_id, :hrp
+      if params[:host]
+        uri = URI.parse(params[:host])
+        raise ArgumentError unless ['http', 'https'].include? uri.scheme
+        @host = uri.host
+        @port = uri.port
+      end
+      @proxy = proxy if params[:proxy]
+      super(params)
+    end
+
     def send_single(payload)
       if @proxy.present?
         _, p_username, p_password, p_host, p_port = @proxy.gsub(/(:|\/|@)/,' ').squeeze(' ').split
