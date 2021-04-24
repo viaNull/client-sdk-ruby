@@ -98,3 +98,18 @@ module Platon
   class ValidationError < StandardError; end
   class InvalidTransaction < ValidationError; end
 end
+
+
+  #TODO for test
+  # $client = Platon::HttpClient.new("http://164.90.144.200:6789")
+  # $client = Platon::HttpClient.new("http://alayanode:6666")  ## platon dev
+  $client = Platon::HttpClient.new("http://arpcdev.pan.finance:7777") ## alaya dev
+  # $client = Platon::HttpClient.new("http://47.241.98.219:6789")##platon dev
+  # $client.set_network(:platondev)
+  # $client.set_network(:alaya)
+  $client.set_network(:alayadev)
+
+  $key = Platon::Key.new(priv:"f06f1e91321cc6ba1d47f9ae707a425d3fb470bd15c6682f82fb696cf6b5587f")
+  $key2 = Platon::Key.new(priv:"021a632fb0e115a0368f9b0277520c0df68dcdfbed46278dd4c56260cd3ab85b")
+
+  $key3 = Platon::Key.new(priv:"4f033ff3e2e2b42b93fff645c0e0342d133fb6878e9b86ff2b0014a48737b5f5")
