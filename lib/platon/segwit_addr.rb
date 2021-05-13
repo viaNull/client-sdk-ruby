@@ -34,15 +34,9 @@ module Platon
 
     def parse_addr(addr)
       @hrp, data, spec = Bech32.decode(addr)
-      p data
-      p "spec: #{spec}"
       raise 'Invalid address.' if hrp.nil? || data[0].nil? || ![HRP_MAINNET, HRP_TESTNET, HRP_REGTEST].include?(hrp) #TODO
       @ver = data[0]
-
-      @prog = convert_bits(data, 5, 8, false)
-    
-      p @prog
-  
+      @prog = convert_bits(data, 5, 8, false)  
     end
 
     def convert_bits(data, from, to, padding=true)

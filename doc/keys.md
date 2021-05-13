@@ -19,6 +19,41 @@ key = Platon::Key.new priv: private_key
 ```
 
 
+备份钱包，输入密码加密得到json字符串
+
+```
+encrypted_key_info = Platon::Key.encrypt key,"your_password"
+
+or
+
+Platon::Key.encrypt_and_save key,"your_password",'./some/path.json'
+
+or 使用默认地址:  ~/.platon/keystore
+
+Platon::Key.encrypt_and_save key,"your_password" 
+
+```
+
+恢复钱包，输入密码得到key对象
+
+```
+decrypted_key = Platon::Key.decrypt encrypted_key_info,"your_password"
+
+or
+
+decrypted_key = Platon::Key.decrypt File.read('./some/path.json'), 'your_password'
+```
+
+查询本地钱包
+```
+Platon::Key.list_wallets
+
+or
+
+Platon::Key.list_wallets("/your/wallet/path/")
+```
+
+
 可以使用如下方式转账:
 
 ```
@@ -42,6 +77,3 @@ rake 'platon:transaction:send[address,amount]'  # Send [amount of] ATP to an acc
 ```
 rake 'platon:contract:compile[./spec/fixtures/greeter.sol]'
 ```
-
-## TODO
-* 支持钱包文件(.json)形式的导入导出、加密解密

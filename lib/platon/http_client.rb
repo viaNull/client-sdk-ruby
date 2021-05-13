@@ -4,8 +4,8 @@ module Platon
   class HttpClient < Client
     attr_accessor :host, :port, :uri, :ssl, :proxy
 
-    def initialize(host, proxy = nil, log = false)
-      super(log)
+    def initialize(host,chain_name, proxy = nil, log = false)
+      super(chain_name,log)
       uri = URI.parse(host)
       raise ArgumentError unless ['http', 'https'].include? uri.scheme
       @host = uri.host

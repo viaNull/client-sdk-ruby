@@ -12,7 +12,7 @@ module Platon
 
     attr_accessor :command, :id, :log, :logger, :default_account, :gas_price, :gas_limit, :ppos, :hrp,:chain_id
 
-    def initialize(log = false)
+    def initialize(chain_name,log = false)
       @id = 0
       @log = log
       @batch = nil
@@ -25,8 +25,7 @@ module Platon
 
       @ppos = Platon::Ppos.new self
 
-      @hrp = "lat"
-      @chain_id = 210309
+      set_network(chain_name.downcase.to_sym)
 
     end
 
@@ -48,7 +47,7 @@ module Platon
 
         puts "Use Network: #{network}: hrp->#{hrp} , chain_id->#{chain_id}"
       else
-        puts "warning: Network:#{network} not found."
+        puts "Warning: Network:#{network} not found. You can use 'update_setting' to set hrp & chain_id"
       end
 
     end

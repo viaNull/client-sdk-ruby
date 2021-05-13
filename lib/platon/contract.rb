@@ -165,7 +165,7 @@ module Platon
     end
 
     def estimate(*params)
-      result = @client.eth_estimate_gas(deploy_args(params))
+      result = @client.platon_estimate_gas(deploy_args(params))
       @decoder.decode_int(result.to_s(16))  ## TODO
     end
 
@@ -214,7 +214,7 @@ module Platon
       params[:address] ||= @address
       params[:topics] = @encoder.ensure_prefix(evt.signature)
       payload = {topics: [params[:topics]], fromBlock: params[:from_block], toBlock: params[:to_block], address: @encoder.ensure_prefix(params[:address])}
-      filter_id = @client.eth_new_filter(payload)
+      filter_id = @client.platon_new_filter(payload)
       return @decoder.decode_int(filter_id)
     end
 
@@ -234,11 +234,11 @@ module Platon
     end
 
     def get_filter_logs(evt, filter_id)
-      parse_filter_data evt, @client.eth_get_filter_logs(filter_id)
+      parse_filter_data evt, @client.platon_get_filter_logs(filter_id)
     end
 
     def get_filter_changes(evt, filter_id)
-      parse_filter_data evt, @client.eth_get_filter_changes(filter_id)
+      parse_filter_data evt, @client.platon_get_filter_changes(filter_id)
     end
 
     def function_name(fun)

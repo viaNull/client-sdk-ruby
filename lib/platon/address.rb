@@ -39,21 +39,15 @@ module Platon
     end
 
     def all_uppercase?
-      # address.match(/(?:atp)[A-F0-9]{40}/)  ##TODO
       address.match(/(?:0[xX])[A-F0-9]{40}/)
-
     end
 
     def all_lowercase?
-      # address.match(/(?:atp)[a-f0-9]{40}/)  ##TODO
       address.match(/(?:0[xX])[a-f0-9]{40}/)
-
     end
 
     def matches_any_format?
-      # address.match(/\A(?:atp)[a-fA-F0-9]{40}\z/)  ##TODO
       address.match(/\A(?:0[xX])[a-fA-F0-9]{40}\z/)
-
     end
 
     def checksum

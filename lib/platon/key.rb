@@ -16,6 +16,28 @@ module Platon
       new priv: priv
     end
 
+    def self.encrypt_and_save(key,password,keypath=nil)
+      encrypted_key_info = encrypt(key,password)
+      ## PlatON似乎打算兼容以太地址, 暂时默认以 0x 地址命名 
+      if keypath==nil || keypath=="" 
+        address = key.address
+        dirname = "#{ENV['HOME']}/.platon/keystore/"
+        FileUtils.mkdir_p(dirname) unless Dir.exists?(dirname)
+        File.write File.join(dirname, "#{$key.address}.json") , encrypted_key_info
+      else
+        File.write keypath , encrypted_key_info
+      end
+      return encrypted_key_info
+    end
+
+    def self.list_wallets(keypath=nil)
+      if keypath==nil || keypath=="" 
+        Dir.glob("#{ENV['HOME']}/.platon/keystore/*").select { |e| File.file? e }
+      else
+        Dir.glob(keypath + "/*").select { |e| File.file? e }
+      end
+    end
+
     def self.personal_recover(message, signature)
       bin_signature = Utils.hex_to_bin(signature).bytes.rotate(-1).pack('c*')
       OpenSsl.recover_compact(Utils.keccak256(Utils.prefix_message(message)), bin_signature)
