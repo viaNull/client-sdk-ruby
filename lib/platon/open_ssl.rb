@@ -61,10 +61,12 @@ module Platon
       end
     end
 
-    if version >= VERSION_1_1_0_NUM
+    if version <= VERSION_1_1_0_NUM
+      puts "<<<"
       # Initialization procedure for the library was changed in OpenSSL 1.1.0
       attach_function :OPENSSL_init_ssl, [:uint64, :pointer], :int
     else
+      puts ">>>"
       attach_function :SSL_library_init, [], :int
       attach_function :ERR_load_crypto_strings, [], :void
       attach_function :SSL_load_error_strings, [], :void
