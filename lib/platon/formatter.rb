@@ -1,36 +1,6 @@
 module Platon
   class Formatter
 
-    #  TODO:
-    # UNITS = {
-    #   wei:        1,
-    #   kwei:       1000,
-    #   ada:        1000,
-    #   femtoether: 1000,
-    #   mwei:       1000000,
-    #   babbage:    1000000,
-    #   picoether:  1000000,
-    #   gwei:       1000000000,
-    #   shannon:    1000000000,
-    #   nanoether:  1000000000,
-    #   nano:       1000000000,
-    #   szabo:      1000000000000,
-    #   microether: 1000000000000,
-    #   micro:      1000000000000,
-    #   finney:     1000000000000000,
-    #   milliether: 1000000000000000,
-    #   milli:      1000000000000000,
-    #   ether:      1000000000000000000,
-    #   eth:        1000000000000000000,
-    #   kether:     1000000000000000000000,
-    #   grand:      1000000000000000000000,
-    #   einstein:   1000000000000000000000,
-    #   mether:     1000000000000000000000000,
-    #   gether:     1000000000000000000000000000,
-    #   tether:     1000000000000000000000000000000
-    # }
-
-    ## TODO: atp? lat?
     UNITS = {
       'von':          1,
       'kvon':         1000,
@@ -93,6 +63,16 @@ module Platon
     end
 
     def from_von(amount, unit = "atp") #TODO
+      return nil if amount.nil?
+      (BigDecimal(amount, 16) / BigDecimal(UNITS[unit.to_sym], 16)).to_s rescue nil
+    end
+
+    def to_gvon(amount, unit = "gvon") 
+      return nil if amount.nil?
+      BigDecimal(UNITS[unit.to_sym] * amount, 16).to_s.to_i rescue nil
+    end
+
+    def from_gvon(amount, unit = "gvon") 
       return nil if amount.nil?
       (BigDecimal(amount, 16) / BigDecimal(UNITS[unit.to_sym], 16)).to_s rescue nil
     end

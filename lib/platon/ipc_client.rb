@@ -9,7 +9,7 @@ module Platon
     ]
 
     def initialize(ipcpath = nil, log = true)
-      super(log)
+      super(nil,log)
       ipcpath ||= IpcClient.default_path
       @ipcpath = ipcpath
     end

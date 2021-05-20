@@ -3,7 +3,7 @@ module Platon
 
     DEFAULT_GAS_LIMIT = 400_000 
 
-    DEFAULT_GAS_PRICE = 1000_000_000_000  #10 GVON
+    DEFAULT_GAS_PRICE = 1_000_000_000  #1 GVON
 
     RPC_COMMANDS = %w(web3_clientVersion web3_sha3 net_version net_peerCount net_listening platon_protocolVersion platon_syncing platon_gasPrice platon_accounts platon_blockNumber platon_getBalance platon_getStorageAt platon_getTransactionCount platon_getBlockTransactionCountByHash platon_getBlockTransactionCountByNumber platon_getCode platon_sign platon_sendTransaction platon_sendRawTransaction platon_call platon_estimateGas platon_getBlockByHash platon_getBlockByNumber platon_getTransactionByHash platon_getTransactionByBlockHashAndIndex platon_getTransactionByBlockNumberAndIndex platon_getTransactionReceipt platon_getUncleByBlockHashAndIndex platon_newFilter platon_newBlockFilter platon_newPendingTransactionFilter platon_uninstallFilter platon_getFilterChanges platon_getFilterLogs platon_getLogs platon_getWork platon_submitWork platon_submitHashrate db_putString db_getString db_putHex db_getHex shh_post shh_version shh_newIdentity shh_hasIdentity shh_newGroup shh_addToGroup shh_newFilter shh_uninstallFilter shh_getFilterChanges shh_getMessages)
     #PLATON_UNSUPPORT_COMMANDS =  %w(platon_coinbase ,plton_mining,platon_hashrate,platon_getUncleCountByBlockHash,platon_getUncleCountByBlockNumber,platon_getUncleByBlockNumberAndIndex platon_getCompilers platon_compileLLL platon_compileSolidity platon_compileSerpent)
@@ -12,12 +12,12 @@ module Platon
 
     attr_accessor :command, :id, :log, :logger, :default_account, :gas_price, :gas_limit, :ppos, :hrp,:chain_id
 
-    def initialize(chain_name,log = false)
+    def initialize(chain_name=nil,log = false)
       @id = 0
       @log = log
       @batch = nil
       # @formatter = Platon::Formatter.new
-      @gas_price = DEFAULT_GAS_PRICE  ## TODO
+      @gas_price = DEFAULT_GAS_PRICE 
       @gas_limit = DEFAULT_GAS_LIMIT
       if @log == true
         @logger = Logger.new("/tmp/platon_ruby_http.log")
@@ -35,7 +35,7 @@ module Platon
       raise ArgumentError.new('Unable to detect client type')
     end
 
-    def set_network(network) ### TODO
+    def set_network(network) 
       config = {
         platondev: {hrp: "lat", chain_id: 210309},
         alaya:{hrp:"atp",chain_id:201018} ,
@@ -45,7 +45,7 @@ module Platon
         @hrp = config[network][:hrp]  
         @chain_id = config[network][:chain_id]
 
-        puts "Use Network: #{network}: hrp->#{hrp} , chain_id->#{chain_id}"
+        puts "Using Network: #{network}: hrp->#{hrp} , chain_id->#{chain_id}"
       else
         puts "Warning: Network:#{network} not found. You can use 'update_setting' to set hrp & chain_id"
       end
@@ -102,17 +102,17 @@ module Platon
       wait_for(transfer_to(address, amount))
     end
 
-    ## TODO
-    def transfer(key, bech32_address, amount)
 
+    def transfer(key, bech32_address, amount,other=nil)
+      raise ArgumentError.new("#{bech32_address} not match current network hrp :#{hrp}") unless Bech32.decode(bech32_address)[0] == hrp
       args = { 
         from: key.address,
         to: Utils.decode_bech32_address(bech32_address),
         value: amount.to_i,
         data: "",
-        nonce: get_nonce(key.bech32_address(hrp:hrp)),  ##TODO
-        gas_limit: gas_limit,
-        gas_price: gas_price,
+        nonce: get_nonce(key.bech32_address(hrp:hrp)),
+        gas_limit: (other && other[:gas_limit])|| gas_limit,
+        gas_price: (other && other[:gas_price]) || gas_price,
         chain_id: chain_id
       }
 
@@ -121,8 +121,8 @@ module Platon
       platon_send_raw_transaction(tx.hex)
     end
     
-    def transfer_and_wait(key, address, amount)
-      return wait_for(transfer(key, address, amount))
+    def transfer_and_wait(key, address, amount,other=nil)
+      return wait_for(transfer(key, address, amount,other))
     end
     
     def wait_for(tx)
@@ -133,27 +133,25 @@ module Platon
 
     def send_command(command,args)
 
-      if ["platon_call"].include?(command)
-        args << "latest"
-      end
-
-      payload = {jsonrpc: "2.0", method: command, params: encode_params(args), id: get_id}
+      # if ["platon_call"].include?(command)
+      #   args << "latest"
+      # end
       
-      puts payload
-
+      payload = {jsonrpc: "2.0", method: command, params: encode_params(args), id: get_id}
+      # puts payload
       @logger.info("Sending #{payload.to_json}") if @log
       if @batch
         @batch << payload
         return true
       else
-        p tmp = send_single(payload.to_json)
-        output = JSON.parse(tmp)
-        # output = JSON.parse(send_single(payload.to_json))
+        # tmp = send_single(payload.to_json)
+        # output = JSON.parse(tmp)
+        output = JSON.parse(send_single(payload.to_json))
         @logger.info("Received #{output.to_json}") if @log
         reset_id
         raise IOError, output["error"]["message"] if output["error"]
         
-        if %W(net_peerCount platon_protocolVersion platon_gasPrice platon_blockNumber platon_getBalance platon_getTransactionCount platon_getBlockTransactionCountByHash platon_getBlockTransactionCountByNumber platon_estimate_gas).include?(command)
+        if %W(net_peerCount platon_protocolVersion platon_gasPrice platon_blockNumber platon_getBalance platon_getTransactionCount platon_getBlockTransactionCountByHash platon_getBlockTransactionCountByNumber platon_estimateGas).include?(command)
           return output["result"].to_i(16)
         end
 

@@ -61,16 +61,16 @@ module Platon
       end
     end
 
-    if version <= VERSION_1_1_0_NUM
-      puts "<<<"
-      # Initialization procedure for the library was changed in OpenSSL 1.1.0
-      attach_function :OPENSSL_init_ssl, [:uint64, :pointer], :int
-    else
-      puts ">>>"
+    # if version >= VERSION_1_1_0_NUM
+
+    #   # Initialization procedure for the library was changed in OpenSSL 1.1.0
+    #   attach_function :OPENSSL_init_ssl, [:uint64, :pointer], :int
+    # else
+
       attach_function :SSL_library_init, [], :int
       attach_function :ERR_load_crypto_strings, [], :void
       attach_function :SSL_load_error_strings, [], :void
-    end
+    # end
 
     attach_function :RAND_poll, [], :int
     attach_function :BN_CTX_free, [:pointer], :int
@@ -226,16 +226,17 @@ module Platon
 
       def init_ffi_ssl
         return if @ssl_loaded
-        if version >= VERSION_1_1_0_NUM
-          OPENSSL_init_ssl(
-            OPENSSL_INIT_LOAD_SSL_STRINGS | OPENSSL_INIT_ENGINE_ALL_BUILTIN,
-            nil
-          )
-        else
+
+        # if version >= VERSION_1_1_0_NUM
+          # OPENSSL_init_ssl(
+          #   OPENSSL_INIT_LOAD_SSL_STRINGS | OPENSSL_INIT_ENGINE_ALL_BUILTIN,
+          #   nil
+          # )
+        # else
           SSL_library_init()
           ERR_load_crypto_strings()
           SSL_load_error_strings()
-        end
+        # end
 
         RAND_poll()
         @ssl_loaded = true

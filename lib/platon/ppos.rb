@@ -1,10 +1,6 @@
 module Platon
   class Ppos
 
-  	MAIN_NET_HRP = "atp";
-		TEST_NET_HRP = "atx";
-		MAIN_NET_CHAINID = 201018;
-
   	PARAMS_ORDER = {
 	    "1000"=> ['typ', 'benefitAddress', 'nodeId', 'externalId', 'nodeName', 'website', 'details', 'amount', 'rewardPer', 'programVersion', 'programVersionSign', 'blsPubKey', 'blsProof'],
 	    "1001"=> ['benefitAddress', 'nodeId', 'rewardPer', 'externalId', 'nodeName', 'website', 'details'],
@@ -49,11 +45,6 @@ module Platon
   	def initialize(client)
   		@client = client
   	end
-
-  	# def hello
-  	# 	puts "!hello"
-  	# 	puts @client.gas_price
-  	# end
 
   	def params_to_data(params)  #params should be Array
   		arr =params.map{|param| RLP.encode(param)}
@@ -109,25 +100,19 @@ module Platon
   		return str
   	end
 
-  	# client.platon_call({"data"=>"0xdc838213ec9594b5cadb2e70149f514f4d3f725cb6e04ed75eb8c581c0", "to"=>"atp1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqxxwje8t"}, "latest")
-
-
-  	 # data = {funcType:5100,address:Platon::Utils.hex_to_bin("b5cadb2e70149f514f4d3f725cb6e04ed75eb8c5"),nodeIDs:[]}.stringify_keys
-  	 # client = Platon::HttpClient.new("http://164.90.144.200:6789")
-  	def call(params,block_param="latest") ##注意:个别参数需提前 hex_to_bin
+   	def call(params,block_param="latest") ##注意:个别参数需提前 hex_to_bin
   		begin
   			rawTx = {}
   			params = obj_to_params(params)
 
   			rawTx["data"] = params_to_data(params)
-  			# hrp = MAIN_NET_CHAINID  ### TODO ,此处有逻辑待处理
   			rawTx["to"] = funcType_to_bech32(@client.hrp,params[0])
   			data = @client.platon_call(rawTx,block_param)
 
   			return ppos_hex_to_obj(data)
 
   		rescue Exception => e
-  			puts "ppos call error :#{e}"
+  			# puts "ppos call error :#{e}"
   			puts e.backtrace
   		end
   	end
@@ -142,19 +127,19 @@ module Platon
           to: funcType_to_address(params[0]),
           data: params_to_data(obj_to_params(params)),
           nonce: @client.get_nonce(key.bech32_address(hrp:@client.hrp)),
-          gas_limit: (other && other[:gas_limit])|| @client.gas_limit || '0xf4240',
-          gas_price: (other && other[:gas_price]) || @client.gas_price || '0x746a528800',
+          gas_limit: (other && other[:gas_limit])|| @client.gas_limit,
+          gas_price: (other && other[:gas_price]) || @client.gas_price,
           chain_id: @client.chain_id,
           value:0
         }
-        p rawTx
+        # p rawTx
         tx = Platon::Tx.new(rawTx)
         tmp = tx.sign key
-        p tmp
+        # p tmp
         @client.platon_send_raw_transaction(tx.hex)
   
       rescue Exception => e
-        puts "ppos call error :#{e}"
+        # puts "ppos send error :#{e}"
         puts e.backtrace
       end
 
