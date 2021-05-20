@@ -177,7 +177,7 @@ contract.transact_and_wait.[function_name](params)
 
 #### PPOS
 
-All PPOS methods have been implemented. See Docs[./doc/new.md] 
+All PPOS methods have been implemented. See [Docs](./doc/zh-cn.md) 
 
 #### Utils
 
