@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["vianull"]
   spec.email         = ["vianull@outlook.com"]
 
-  spec.summary       = "TOD: Write a short summary, because RubyGems requires one."
+  spec.summary       = "Helps to make interacting with platon&alaya blockchain from ruby"
   # spec.description   = "TOD: Write a longer description or delete this line."
   # spec.homepage      = "TOD: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
@@ -39,12 +39,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.5"
   spec.add_development_dependency "pry", "~> 0.10"
-  spec.add_development_dependency "eth", "~> 0.4"
 
   spec.add_dependency "activesupport", ">= 4.0"
   spec.add_dependency "digest-sha3", "~> 1.1"
   spec.add_dependency 'ffi', '~> 1.0'
   spec.add_dependency 'rlp', '0.7.3'
   spec.add_dependency 'money-tree', '0.10.0'
+  spec.add_dependency "scrypt","~> 3.0.6"
 
 end

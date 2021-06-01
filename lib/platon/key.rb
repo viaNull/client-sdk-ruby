@@ -23,7 +23,7 @@ module Platon
         address = key.address
         dirname = "#{ENV['HOME']}/.platon/keystore/"
         FileUtils.mkdir_p(dirname) unless Dir.exists?(dirname)
-        File.write File.join(dirname, "#{$key.address}.json") , encrypted_key_info
+        File.write File.join(dirname, "#{key.address}.json") , encrypted_key_info
       else
         File.write keypath , encrypted_key_info
       end

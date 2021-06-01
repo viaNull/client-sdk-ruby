@@ -138,7 +138,7 @@ module Platon
       # end
       
       payload = {jsonrpc: "2.0", method: command, params: encode_params(args), id: get_id}
-      puts payload
+      # puts payload
       @logger.info("Sending #{payload.to_json}") if @log
       if @batch
         @batch << payload

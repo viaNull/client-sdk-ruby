@@ -7,7 +7,7 @@
 </p>
 
 
-Gem "platon-ruby" helps to make interacting with platon&alaya blockchain from ruby .
+Gem "platon" helps to make interacting with platon&alaya blockchain from ruby .
 
 
 ## Installation

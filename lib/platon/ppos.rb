@@ -157,8 +157,8 @@ module Platon
           details,
           Platon::Formatter.new.to_von(amount),
           reward_per,
-          program_version,  #$client.admin_get_program_version 获取
-          Utils.hex_to_bin(program_version_sign), #$client.admin_get_program_version 获取
+          program_version,  #client.admin_get_program_version 获取
+          Utils.hex_to_bin(program_version_sign), #client.admin_get_program_version 获取
           Utils.hex_to_bin(bls_pub_key), 
           Utils.hex_to_bin(bls_proof)  ## client.admin_get_schnorr_nizk_prove获取
       ]

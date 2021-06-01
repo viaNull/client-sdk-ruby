@@ -1,12 +1,13 @@
 PATH
   remote: .
   specs:
-    platon (0.2.5)
+    platon (0.2.6)
       activesupport (>= 4.0)
       digest-sha3 (~> 1.1)
       ffi (~> 1.0)
       money-tree (= 0.10.0)
       rlp (= 0.7.3)
+      scrypt (~> 3.0.6)
 
 GEM
   remote: https://rubygems.org/
@@ -20,13 +21,6 @@ GEM
     concurrent-ruby (1.1.8)
     diff-lcs (1.4.4)
     digest-sha3 (1.1.0)
-    digest-sha3-patched (1.1.1)
-    eth (0.4.12)
-      digest-sha3-patched (~> 1.1)
-      ffi (~> 1.0)
-      money-tree (~> 0.10.0)
-      rlp (~> 0.7.3)
-      scrypt (~> 3.0.6)
     ffi (1.15.1)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -66,7 +60,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 2.0)
-  eth (~> 0.4)
   platon!
   pry (~> 0.10)
   rake (~> 13.0)
