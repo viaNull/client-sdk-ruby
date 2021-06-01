@@ -949,11 +949,11 @@ key = Platon::Key.new priv: private_key
 ```ruby
 encrypted_key_info = Platon::Key.encrypt key,"your_password"
 
-or
+# or
 
 Platon::Key.encrypt_and_save key,"your_password",'./some/path.json'
 
-or 使用默认地址:  ~/.platon/keystore
+# or 使用默认地址:  ~/.platon/keystore
 
 Platon::Key.encrypt_and_save key,"your_password" 
 
@@ -965,7 +965,7 @@ Platon::Key.encrypt_and_save key,"your_password"
 ```ruby
 decrypted_key = Platon::Key.decrypt encrypted_key_info,"your_password"
 
-or
+# or
 
 decrypted_key = Platon::Key.decrypt File.read('./some/path.json'), 'your_password'
 ```
@@ -975,7 +975,7 @@ decrypted_key = Platon::Key.decrypt File.read('./some/path.json'), 'your_passwor
 ```ruby
 Platon::Key.list_wallets
 
-or
+# or
 
 Platon::Key.list_wallets("/your/wallet/path/")
 ```
@@ -989,7 +989,7 @@ Platon::Key.list_wallets("/your/wallet/path/")
 client = Platon::HttpClient.new("http://127.0.0.1:6789",:alayadev)
 client.transfer key,"atpxxxxxxxxxxxxxxx",10**16
 
-or 
+# or 
 
 client.transfer key,"atpxxxxxxxxxxxxxxx",10**16,{gas_limit: 500_000 , gas_price: 2_000_000_000}  ## 指定gas_price 与 gas_limit
 ```
@@ -997,7 +997,8 @@ client.transfer key,"atpxxxxxxxxxxxxxxx",10**16,{gas_limit: 500_000 , gas_price:
 通过如下方式验证是否为bech32地址:
 
 ```ruby
-Plaotn::Utils.is_bech32_address?("atpxxxxxxxxxxxxxxx")
+Platon::Utils.is_bech32_address?("atp1c5jsm49tp69cv0sktgg5ntj8pp5ppzqr4735gv")
+=> true
 ```
 
 ### 签名交易 tx.sign

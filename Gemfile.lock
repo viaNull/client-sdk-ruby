@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    platon-ruby (0.1.2)
+    platon (0.2.5)
       activesupport (>= 4.0)
       digest-sha3 (~> 1.1)
       ffi (~> 1.0)
@@ -27,7 +27,7 @@ GEM
       money-tree (~> 0.10.0)
       rlp (~> 0.7.3)
       scrypt (~> 3.0.6)
-    ffi (1.15.0)
+    ffi (1.15.1)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -67,7 +67,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 2.0)
   eth (~> 0.4)
-  platon-ruby!
+  platon!
   pry (~> 0.10)
   rake (~> 13.0)
   rspec (~> 3.0)

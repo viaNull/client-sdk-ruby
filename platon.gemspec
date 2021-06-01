@@ -3,7 +3,7 @@
 require_relative "lib/platon/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "platon-ruby"
+  spec.name          = "platon"
   spec.version       = Platon::VERSION
   spec.authors       = ["vianull"]
   spec.email         = ["vianull@outlook.com"]
@@ -47,5 +47,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rlp', '0.7.3'
   spec.add_dependency 'money-tree', '0.10.0'
 
-  # spec.add_dependency 'bech32', '1.1.0'
 end

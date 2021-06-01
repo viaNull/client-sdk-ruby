@@ -76,10 +76,8 @@ module Platon
     end
 
     def encode_address(value, _)
-      puts "value: #{value}"
-      
+      # puts "value: #{value}"  
       value = Utils.decode_bech32_address(value) if Utils.is_bech32_address?(value)
-
       value = "0" * 24 + value.gsub(/^0x/,'')
       raise ArgumentError if value.size != 64
       value

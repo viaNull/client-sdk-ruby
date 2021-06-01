@@ -175,11 +175,12 @@ module Platon
 
     def call_args(fun, args)
       # add_gas_options_args({to: @address, from: @sender, data: call_payload(fun, args)})
-      {to: @address, from: @sender, data: call_payload(fun, args)}  
+      {to: @address, from: @sender, data: call_payload(fun, args)}
+      ## TODO[from js SDK] :missing "from" should give error on deploy and send, call ?
     end
 
     def call_raw(fun, *args)
-      raw_result = @client.platon_call(call_args(fun, args))
+      raw_result = @client.platon_call(call_args(fun, args),"latest")
       output = @decoder.decode_arguments(fun.outputs, raw_result)
       return {data: call_payload(fun, args), raw: raw_result, formatted: output}
     end
