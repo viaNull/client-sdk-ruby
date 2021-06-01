@@ -137,16 +137,14 @@ describe Platon::Contract do
   end
 
   context "call" do
-    # let(:platon_send_request) { '{"jsonrpc":"2.0","method":"platon_call","params":[{"to":"0xaf83b6f1162062aa6711de633821f3e66b6fb3a5","from":"0x27dcb234fab8190e53e2d949d7b2c37411efb72e","data":"0xcfae32170000000000000000000000000000000000000000000000000000000000000000"},"latest"],"id":1}' }
-    let(:platon_send_request){ {:jsonrpc=>"2.0", :method=>"platon_call", :params=>[{:to=>"0xaf83b6f1162062aa6711de633821f3e66b6fb3a5", :from=>"0x27dcb234fab8190e53e2d949d7b2c37411efb72e", :data=>"0xcfae32170000000000000000000000000000000000000000000000000000000000000000"}], :id=>1}.to_json}
+    let(:platon_send_request){ {:jsonrpc=>"2.0", :method=>"platon_call", :params=>[{:to=>"0xaf83b6f1162062aa6711de633821f3e66b6fb3a5", :from=>"0x27dcb234fab8190e53e2d949d7b2c37411efb72e", :data=>"0xcfae32170000000000000000000000000000000000000000000000000000000000000000"},"latest"], :id=>1}.to_json}
     let(:platon_send_result) { '{"jsonrpc":"2.0", "result": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003616c610000000000000000000000000000000000000000000000000000000000", "id": 1}' }
     subject { expect(contract.call.greet).to eq "ala" }
     it_behaves_like "communicate with node"
   end
 
   context "call_raw" do
-    # let(:platon_send_request) { '{"jsonrpc":"2.0","method":"platon_call","params":[{"to":"0xaf83b6f1162062aa6711de633821f3e66b6fb3a5","from":"0x27dcb234fab8190e53e2d949d7b2c37411efb72e","data":"0xcfae32170000000000000000000000000000000000000000000000000000000000000000"},"latest"],"id":1}' }
-    let(:platon_send_request){{:jsonrpc=>"2.0", :method=>"platon_call", :params=>[{:to=>"0xaf83b6f1162062aa6711de633821f3e66b6fb3a5", :from=>"0x27dcb234fab8190e53e2d949d7b2c37411efb72e", :data=>"0xcfae32170000000000000000000000000000000000000000000000000000000000000000"}], :id=>1}.to_json}
+    let(:platon_send_request){{:jsonrpc=>"2.0", :method=>"platon_call", :params=>[{:to=>"0xaf83b6f1162062aa6711de633821f3e66b6fb3a5", :from=>"0x27dcb234fab8190e53e2d949d7b2c37411efb72e", :data=>"0xcfae32170000000000000000000000000000000000000000000000000000000000000000"},"latest"], :id=>1}.to_json}
     let(:platon_send_result) { '{"jsonrpc":"2.0", "result": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003616c610000000000000000000000000000000000000000000000000000000000", "id": 1}' }
     subject { expect(contract.call_raw.greet[:formatted]).to eq ["ala"] }
     it_behaves_like "communicate with node"
