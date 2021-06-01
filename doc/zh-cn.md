@@ -745,72 +745,73 @@ client = Platon::HttpClient.new("http://127.0.0.1:6789",:alayadev)
         
         ```ruby
             {
-      "voteA": {
-        "epoch": 0,   //共识轮epoch值
-        "viewNumber": 0,    //共识轮view值
-        "blockHash": "0x58b5976a471f86c4bd198984827bd594dce6ac861ef15bbbb1555e7b2edc2fc9",   //区块hash
-        "blockNumber": 16013,   //区块number
-        "blockIndex": 0,    //区块在一轮view中的索引值
-        "validateNode": { 
-          "index": 0,    //验证人在一轮epoch中的索引值
-          "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4",  //验证人地址
-          "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",   //验证人nodeID
-          "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"    //验证人bls公钥
-        },
-        "signature": "0x071350aed09f226e218715357ffb7523ba41271dd1d82d4dded451ee6509cd71f6888263b0b14bdfb33f88c04f76790d00000000000000000000000000000000"    //消息签名
-      },
-      "voteB": {
-        "epoch": 0,
-        "viewNumber": 0,
-        "blockHash": "0x422515ca50b9aa01c46dffee53f3bef0ef29884bfd014c3b6170c05d5cf67696",
-        "blockNumber": 16013,
-        "blockIndex": 0,
-        "validateNode": {
-          "index": 0,
-          "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4",
-          "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",
-          "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"
-        },
-        "signature": "0x9bf6c01643058c0c828c35dc3277666edd087cb439c5f6a78ba065d619f812fb42c5ee881400a7a42dd8366bc0c5c88100000000000000000000000000000000"
-      }
-    }
+              "voteA": {
+                "epoch": 0,   //共识轮epoch值
+                "viewNumber": 0,    //共识轮view值
+                "blockHash": "0x58b5976a471f86c4bd198984827bd594dce6ac861ef15bbbb1555e7b2edc2fc9",   //区块hash
+                "blockNumber": 16013,   //区块number
+                "blockIndex": 0,    //区块在一轮view中的索引值
+                "validateNode": { 
+                  "index": 0,    //验证人在一轮epoch中的索引值
+                  "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4",  //验证人地址
+                  "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",   //验证人nodeID
+                  "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"    //验证人bls公钥
+                },
+                "signature": "0x071350aed09f226e218715357ffb7523ba41271dd1d82d4dded451ee6509cd71f6888263b0b14bdfb33f88c04f76790d00000000000000000000000000000000"    //消息签名
+              },
+              "voteB": {
+                "epoch": 0,
+                "viewNumber": 0,
+                "blockHash": "0x422515ca50b9aa01c46dffee53f3bef0ef29884bfd014c3b6170c05d5cf67696",
+                "blockNumber": 16013,
+                "blockIndex": 0,
+                "validateNode": {
+                  "index": 0,
+                  "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4",
+                  "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",
+                  "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"
+                },
+                "signature": "0x9bf6c01643058c0c828c35dc3277666edd087cb439c5f6a78ba065d619f812fb42c5ee881400a7a42dd8366bc0c5c88100000000000000000000000000000000"
+              }
+            }
         ```
         
         * duplicateViewchange
         
         ```ruby
             {
-      "viewA": {
-        "epoch": 0,  
-        "viewNumber": 0, 
-        "blockHash": "0xb84a40bb954e579716e7a6b9021618f6b25cdb0e0dd3d8c2c0419fe835640f36",  //区块hash
-        "blockNumber": 16013, 
-        "validateNode": {
-          "index": 0,  
-          "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4", 
-          "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",
-          "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"
-        },
-        "signature": "0x9c8ba2654c6b8334b1b94d3b421c5901242973afcb9d87c4ab6d82c2aee8e212a08f2ae000c9203f05f414ca578cda9000000000000000000000000000000000",
-        "blockEpoch": 0,
-        "blockView": 0
-      },
-      "viewB": {
-        "epoch": 0,
-        "viewNumber": 0,
-        "blockHash": "0x2a60ed6f04ccb9e468fbbfdda98b535653c42a16f1d7ccdfbd5d73ae1a2f4bf1",
-        "blockNumber": 16013,
-        "validateNode": {
-          "index": 0,
-          "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4",
-          "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",
-          "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"
-        },
-        "signature": "0xed69663fb943ce0e0dd90df1b65e96514051e82df48b3867516cc7e505234b9ca707fe43651870d9141354a7a993e09000000000000000000000000000000000",
-        "blockEpoch": 0,
-        "blockView": 0
-      }
-    }
+              "viewA": {
+                "epoch": 0,  
+                "viewNumber": 0, 
+                "blockHash": "0xb84a40bb954e579716e7a6b9021618f6b25cdb0e0dd3d8c2c0419fe835640f36",  //区块hash
+                "blockNumber": 16013, 
+                "validateNode": {
+                  "index": 0,  
+                  "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4", 
+                  "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",
+                  "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"
+                },
+                "signature": "0x9c8ba2654c6b8334b1b94d3b421c5901242973afcb9d87c4ab6d82c2aee8e212a08f2ae000c9203f05f414ca578cda9000000000000000000000000000000000",
+                "blockEpoch": 0,
+                "blockView": 0
+              },
+              "viewB": {
+                "epoch": 0,
+                "viewNumber": 0,
+                "blockHash": "0x2a60ed6f04ccb9e468fbbfdda98b535653c42a16f1d7ccdfbd5d73ae1a2f4bf1",
+                "blockNumber": 16013,
+                "validateNode": {
+                  "index": 0,
+                  "address": "0xc30671be006dcbfd6d36bdf0dfdf95c62c23fad4",
+                  "nodeId": "19f1c9aa5140bd1304a3260de640a521c33015da86b88cd2ecc83339b558a4d4afa4bd0555d3fa16ae43043aeb4fbd32c92b34de1af437811de51d966dc64365",
+                  "blsPubKey": "f93a2381b4cbb719a83d80a4feb93663c7aa026c99f64704d6cc464ae1239d3486d0cf6e0b257ac02d5dd3f5b4389907e9d1d5b434d784bfd7b89e0822148c7f5b8e1d90057a5bbf4a0abf88bbb12902b32c94ca390a2e16eea8132bf8c2ed8f"
+                },
+                "signature": "0xed69663fb943ce0e0dd90df1b65e96514051e82df48b3867516cc7e505234b9ca707fe43651870d9141354a7a993e09000000000000000000000000000000000",
+                "blockEpoch": 0,
+                "blockView": 0
+              }
+            }
+        
         ```
 
 * 示例
