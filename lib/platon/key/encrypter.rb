@@ -122,7 +122,7 @@ class Platon::Key::Encrypter
   end
 
   def address
-    Platon::Key.new(priv: key).address
+    Platon::Key.new(priv: key).bech32_address(hrp: options[:hrp] ? options[:hrp]:"atp")
   end
 
 end

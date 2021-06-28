@@ -11,10 +11,6 @@ module Platon
     attr_accessor :call_raw_proxy, :call_proxy, :transact_proxy, :transact_and_wait_proxy
     attr_accessor :new_filter_proxy, :get_filter_logs_proxy, :get_filter_change_proxy
 
-    def self.hello
-      puts 111
-    end
-
     def initialize(name, code, abi, client = Platon::Singleton.instance)
       @name = name
       @code = code

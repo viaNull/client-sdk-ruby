@@ -66,13 +66,18 @@ key.address ## EIP55 checksummed address
 将key加密保存至json文件
 
 ```ruby
+## default address hrp:"lat"
 encrypted_key_info = Platon::Key.encrypt key,"your_password"
+
+## set address hrp
+
+encrypted_key_info = Platon::Key.encrypt key,"your_password",{hrp:"atp"}
 
 ## or save to location
 
-Platon::Key.encrypt_and_save key,"your_password",'./some/path.json'
+Platon::Key.encrypt_and_save key,"your_password",{hrp:"atp",keypath:'./some/path.json'}
 
-## or default:  ~/.platon/keystore
+## or default keypath: "~/.platon/keystore" ,and use default hrp:"lat"
 
 Platon::Key.encrypt_and_save key,"your_password" 
 
@@ -929,11 +934,11 @@ key.public_hex ## 公钥
 key.address
 => "0xFc0Fe6c7604dcDd6ca1B9be703D6AB91fF2fC007"
 
-key.bech32_address  ## bech32 格式公钥 ,默认是 "atp"
-=> "atp1ls87d3mqfhxadjsmn0ns844tj8ljlsq89k95cn" 
+key.bech32_address  ## bech32 格式公钥 ,默认是 "lat"
+=> "lat1ls87d3mqfhxadjsmn0ns844tj8ljlsq8uqnv8u" 
 
-key.bech32_address(hrp: "lat") 
-=> "lat1ls87d3mqfhxadjsmn0ns844tj8ljlsq8uqnv8u"
+key.bech32_address(hrp: "atp") 
+=> "atp1ls87d3mqfhxadjsmn0ns844tj8ljlsq89k95cn"
 ```
 
 ### 使用已有私钥导入创建key
@@ -945,40 +950,53 @@ key = Platon::Key.new priv: private_key
 
 ### 备份钱包 encrypt
 
-备份钱包，输入密码加密得到json字符串
+备份钱包，输入密码加密得到json字符串。第三个参数为options,hash类型，可传参数有:  hrp
 
 ```ruby
+# 默认使用的hrp为"lat"
 encrypted_key_info = Platon::Key.encrypt key,"your_password"
 
-# or
+#or
 
-Platon::Key.encrypt_and_save key,"your_password",'./some/path.json'
+encrypted_key_info = Platon::Key.encrypt key,"your_password",{hrp:"atp"}
 
-# or 使用默认地址:  ~/.platon/keystore
+```
+### 备份钱包且存储
 
+备份钱包，输入密码加密得到json字符串,并存储于指定路径或默认路径。第三个参数为options,hash类型，可传参数有:  hrp ,keypath
+
+```ruby
+#使用默认地址:  ~/.platon/keystore ,默认hrp: "lat"
 Platon::Key.encrypt_and_save key,"your_password" 
+
+# or 
+
+Platon::Key.encrypt_and_save key,"your_password",{hrp:"atp",keypath:'./some/path.json'}
 
 ```
 
+
 ### 恢复钱包 decrypt
-恢复钱包，输入密码得到key对象
+恢复钱包，输入密码得到key对象, 恢复钱包可适配任意hrp，无需指定hrp
 
 ```ruby
 decrypted_key = Platon::Key.decrypt encrypted_key_info,"your_password"
 
-# or
+# or 先读取指定路径的钱包文件
 
 decrypted_key = Platon::Key.decrypt File.read('./some/path.json'), 'your_password'
 ```
 
 ###查询本地钱包 list_wallets
 
+可传参数options,默认路径为 "~/.platon/keystore"
+
 ```ruby
 Platon::Key.list_wallets
 
 # or
 
-Platon::Key.list_wallets("/your/wallet/path/")
+Platon::Key.list_wallets(keypath:"/your/wallet/path/")
 ```
 
 
@@ -1040,7 +1058,7 @@ rake 'platon:contract:compile[./spec/fixtures/greeter.sol]'
 
 * 参数
     * `Object`: 发起方的 Key 实例，通过 Platon::Key.new 创建或导入
-    * `Integer`: typ, 表示使用账户自由金额还是账户的锁仓金额做质押，0: 自由金额； 1: 锁仓金额
+    * `Integer`: typ, 表示使用账户自由金额还是账户的锁仓金额做质押，0: 自由金额； 1: 锁仓金额 2:优先使用锁仓余额，锁仓余额不足，则剩下使用自由金额
     * `String`: benefitAddress,用于接受出块奖励和质押奖励的收益账户
     * `String`: nodeId,被质押的节点Id(也叫候选人的节点Id)
     * `String`: externalId,外部Id(有长度限制，给第三方拉取节点描述的Id)

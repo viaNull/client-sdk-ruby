@@ -138,7 +138,7 @@ module Platon
       # end
       
       payload = {jsonrpc: "2.0", method: command, params: encode_params(args), id: get_id}
-      # puts payload
+      puts payload
       @logger.info("Sending #{payload.to_json}") if @log
       if @batch
         @batch << payload
@@ -146,7 +146,7 @@ module Platon
       else
         # tmp = send_single(payload.to_json)
         # output = JSON.parse(tmp)
-        output = JSON.parse(send_single(payload.to_json))
+        p output = JSON.parse(send_single(payload.to_json))
         @logger.info("Received #{output.to_json}") if @log
         reset_id
         raise IOError, output["error"]["message"] if output["error"]

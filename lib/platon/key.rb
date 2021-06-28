@@ -5,10 +5,10 @@ module Platon
 
     attr_reader :private_key, :public_key
 
-    def self.encrypt(key, password)
+    def self.encrypt(key, password,options={})
       key = new(priv: key) unless key.is_a?(Key)
 
-      Encrypter.perform key.private_hex, password
+      Encrypter.perform key.private_hex, password ,options
     end
 
     def self.decrypt(data, password)
@@ -16,9 +16,10 @@ module Platon
       new priv: priv
     end
 
-    def self.encrypt_and_save(key,password,keypath=nil)
-      encrypted_key_info = encrypt(key,password)
+    def self.encrypt_and_save(key,password,options={})
+      encrypted_key_info = encrypt(key,password,options)
       ## PlatON似乎打算兼容以太地址, 暂时默认以 0x 地址命名 
+      keypath = options[:keypath]
       if keypath==nil || keypath=="" 
         address = key.address
         dirname = "#{ENV['HOME']}/.platon/keystore/"
@@ -30,7 +31,8 @@ module Platon
       return encrypted_key_info
     end
 
-    def self.list_wallets(keypath=nil)
+    def self.list_wallets(options={})
+      keypath = options[:keypath]
       if keypath==nil || keypath=="" 
         Dir.glob("#{ENV['HOME']}/.platon/keystore/*").select { |e| File.file? e }
       else
@@ -64,8 +66,8 @@ module Platon
       Utils.public_key_to_address public_hex
     end
 
-    def bech32_address(hrp:"atp")
-      Utils.to_bech32_address(hrp,address) ##TODO
+    def bech32_address(hrp:"lat")
+      Utils.to_bech32_address(hrp,address)
     end
     alias_method :to_address, :address
 

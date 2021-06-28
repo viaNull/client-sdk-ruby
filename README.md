@@ -1,6 +1,6 @@
 # Ruby SDK for Platon & Alaya 
 
-
+混合抵押， pending
 
 <p align="center">
     <img src="./platon-ruby-logo.png" width="80" title="platon ruby SDK" alt="platon ruby SDK">
@@ -29,7 +29,7 @@ Or install it yourself as:
 
 ## Quick Start
 
-```
+```ruby
 ## generate new key 
 key = Platon::Key.new  
 
@@ -53,7 +53,7 @@ client.transfer key,"atpxxxxxxxxxxxxxxx",10**16
 
 Create a new public/private key and get its address
 
-```
+```ruby
 key = Platon::Key.new
 key.private_hex ## private key
 => "08bb093d6184cb06a3f80507953ba6768c03d8114a429b0ec7875bb6b6e1a8a6"
@@ -61,11 +61,11 @@ key.private_hex ## private key
 key.public_hex ## public key
 => "04641129e66399310ce4a41098d3b3fc4d722edf423dfdc0a76eba5d6e2155bbe611ee2a5c06011ab76040ca53b9ead4c5061d8cc8a89afa3f45af5830661d4b34"
 
-key.bech32_address  ## bech32 address ,default "atp"
-=> "atp1ls87d3mqfhxadjsmn0ns844tj8ljlsq89k95cn" 
+key.bech32_address  ## bech32 address ,default "lat"
+=> "lat1ls87d3mqfhxadjsmn0ns844tj8ljlsq8uqnv8u" 
 
-key.bech32_address(hrp: "lat") 
-=> "lat1ls87d3mqfhxadjsmn0ns844tj8ljlsq8uqnv8u"
+key.bech32_address(hrp: "atp") 
+=> "atp1ls87d3mqfhxadjsmn0ns844tj8ljlsq89k95cn"
 
 key.address ## EIP55 checksummed address
 => "0xFc0Fe6c7604dcDd6ca1B9be703D6AB91fF2fC007"
@@ -73,14 +73,19 @@ key.address ## EIP55 checksummed address
 
 Encrypt keys to json file
 
-```
+```ruby
+## default address hrp:"lat"
 encrypted_key_info = Platon::Key.encrypt key,"your_password"
+
+## set address hrp
+
+encrypted_key_info = Platon::Key.encrypt key,"your_password",{hrp:"atp"}
 
 ## or save to location
 
-Platon::Key.encrypt_and_save key,"your_password",'./some/path.json'
+Platon::Key.encrypt_and_save key,"your_password",{hrp:"atp",keypath:'./some/path.json'}
 
-## or default:  ~/.platon/keystore
+## or default keypath: "~/.platon/keystore" ,and use default hrp:"lat"
 
 Platon::Key.encrypt_and_save key,"your_password" 
 
@@ -88,7 +93,7 @@ Platon::Key.encrypt_and_save key,"your_password"
 
 Decrypt keys from json file
 
-```
+```ruby
 decrypted_key = Platon::Key.decrypt encrypted_key_info,"your_password"
 
 or
@@ -100,7 +105,7 @@ decrypted_key = Platon::Key.decrypt File.read('./some/path.json'), 'your_passwor
 
 Build a transcation :
 
-```
+```ruby
 args = { 
     from: key.address,
     to: key2.address,
@@ -116,13 +121,13 @@ tx = Platon::Tx.new args
 
 Or decode from an encoded raw transaction
 
-```
+```ruby
 tx = Platon::Tx.decode hex
 ```
 
 You can sign the transaction:
 
-```
+```ruby
 tx.sign key
 platon_send_raw_transaction(tx.hex)
 ```
@@ -133,7 +138,7 @@ Get the raw transaction with `tx.hex`, and broadcast it through any PlatON node 
 
 By default methods interactiong with contracts&PPOS will use default JSON RPC Client that will handle connection to platon node. 
 
-```
+```ruby
 client = Platon::HttpClient.new("http://127.0.0.1:6789",:alayadev)
 ```
 
@@ -146,7 +151,7 @@ Default setting:
 
 You can use `client.update_setting` to change chain configs:
 
-```
+```ruby
 client.update_setting(hrp:"atx",chain_id: 1234)
 ```
 
@@ -154,12 +159,12 @@ client.update_setting(hrp:"atx",chain_id: 1234)
 
 You can get contract from blockchain. To do so you need a contract name ,contract address and ABI definition:
 
-```
+```ruby
 contract = Platon::Contract.create(client: client ,name: "MyContract", address: "atpxxxx_your_bench32_address", abi: abi)
 ```
 
 Alternatively you can obtain abi definition and name from contract source file:
-```
+```ruby
 contract = Platon::Contract.create(client: client , file: "MyContract.sol", address: "atpxxxx_your_bench32_address")
 ```
 
@@ -167,7 +172,7 @@ Interacting with contracts:
 
 You can `call` contract read-only method , no transaction will be sent to the network. If method changes contract state ,`transact` method can be used .
 
-```
+```ruby
 contract.call.[function_name](params)
 
 contract.transact.[function_name](params)
@@ -181,7 +186,7 @@ All PPOS methods have been implemented. See [Docs](./doc/zh-cn.md)
 
 #### Utils
 
-```
+```ruby
 Platon::Utils.is_bech32_address?("atp1tfm3e44jwdjmelcc9yacus700wcts0zhgw6425")
 => true
 
