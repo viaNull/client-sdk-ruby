@@ -1,6 +1,5 @@
 # Ruby SDK for Platon & Alaya 
 
-混合抵押， pending
 
 <p align="center">
     <img src="./platon-ruby-logo.png" width="80" title="platon ruby SDK" alt="platon ruby SDK">
