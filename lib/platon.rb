@@ -9,8 +9,6 @@ require 'ffi'
 require 'money-tree'
 require 'rlp'
 
-require 'bech32'
-
 module Platon
 
   BYTE_ZERO = "\x00".freeze
@@ -37,7 +35,8 @@ module Platon
       (cid < 1) ? nil : cid
     end
   end
-
+  
+  require "platon/bech32"
   require 'platon/abi'
   require 'platon/client'
   require 'platon/ipc_client'
