@@ -9,7 +9,7 @@ module Platon
       ffi_lib 'libeay32', 'ssleay32'
     else
       ffi_lib [
-        'libssl.so.1.1.0', 'libssl.so.1.1',
+        'libssl.so.1.1.0', 'libssl.so.1.1', 'libssl.1.1',
         'libssl.so.1.0.0', 'libssl.so.10',
         'ssl'
       ]
@@ -55,22 +55,21 @@ module Platon
     # @return [Integer] version number as an integer.
     def self.version
       if self.respond_to?(:OpenSSL_version_num)
-        OpenSSL_version_num()
+        OpenSSL_version_num()    
       else
-        SSLeay()
+        # Hardcode here: OpenSSL verson > 1.1 should < 269484032 . But on MacOS ,version 1.0.2 ,SSLeay returns 536870912 ,that is v2.0.0  
+        [SSLeay(),269484031].min
       end
     end
 
-    # if version >= VERSION_1_1_0_NUM
-
-    #   # Initialization procedure for the library was changed in OpenSSL 1.1.0
-    #   attach_function :OPENSSL_init_ssl, [:uint64, :pointer], :int
-    # else
-
+    if version >= VERSION_1_1_0_NUM
+      # Initialization procedure for the library was changed in OpenSSL 1.1.0
+      attach_function :OPENSSL_init_ssl, [:uint64, :pointer], :int
+    else
       attach_function :SSL_library_init, [], :int
       attach_function :ERR_load_crypto_strings, [], :void
       attach_function :SSL_load_error_strings, [], :void
-    # end
+    end
 
     attach_function :RAND_poll, [], :int
     attach_function :BN_CTX_free, [:pointer], :int
@@ -227,16 +226,16 @@ module Platon
       def init_ffi_ssl
         return if @ssl_loaded
 
-        # if version >= VERSION_1_1_0_NUM
-          # OPENSSL_init_ssl(
-          #   OPENSSL_INIT_LOAD_SSL_STRINGS | OPENSSL_INIT_ENGINE_ALL_BUILTIN,
-          #   nil
-          # )
-        # else
+        if version >= VERSION_1_1_0_NUM
+          OPENSSL_init_ssl(
+            OPENSSL_INIT_LOAD_SSL_STRINGS | OPENSSL_INIT_ENGINE_ALL_BUILTIN,
+            nil
+          )
+        else
           SSL_library_init()
           ERR_load_crypto_strings()
           SSL_load_error_strings()
-        # end
+        end
 
         RAND_poll()
         @ssl_loaded = true

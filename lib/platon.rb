@@ -35,30 +35,30 @@ module Platon
       (cid < 1) ? nil : cid
     end
   end
-  
-  require "platon/bech32"
-  require 'platon/abi'
-  require 'platon/client'
-  require 'platon/ipc_client'
-  require 'platon/http_client'
-  require 'platon/singleton'
-  require 'platon/solidity'
-  require 'platon/initializer'
-  require 'platon/contract'
-  require 'platon/explorer_url_helper'
-  require 'platon/function'
-  require 'platon/function_input'
-  require 'platon/function_output'
-  require 'platon/contract_event'
-  require 'platon/encoder'
-  require 'platon/decoder'
-  require 'platon/formatter'
-  require 'platon/transaction'
-  require 'platon/deployment'
-  require 'platon/contract_initializer'
-  require 'platon/railtie' if defined?(Rails)
 
-  require 'platon/ppos'
+  require_relative 'platon/bech32'
+  require_relative 'platon/abi'
+  require_relative 'platon/client'
+  require_relative 'platon/ipc_client'
+  require_relative 'platon/http_client'
+  require_relative 'platon/singleton'
+  require_relative 'platon/solidity'
+  require_relative 'platon/initializer'
+  require_relative 'platon/contract'
+  require_relative 'platon/explorer_url_helper'
+  require_relative 'platon/function'
+  require_relative 'platon/function_input'
+  require_relative 'platon/function_output'
+  require_relative 'platon/contract_event'
+  require_relative 'platon/encoder'
+  require_relative 'platon/decoder'
+  require_relative 'platon/formatter'
+  require_relative 'platon/transaction'
+  require_relative 'platon/deployment'
+  require_relative 'platon/contract_initializer'
+  require_relative 'platon/railtie' if defined?(Rails)
+
+  require_relative 'platon/ppos'
 
   autoload :Address, 'platon/address'
   autoload :Gas, 'platon/gas'
